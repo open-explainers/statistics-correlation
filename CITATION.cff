@@ -17,10 +17,15 @@ url: "https://github.com/open-explainers/statistics-correlation"
 license: MIT
 
 abstract: >
-  statistics-correlation project focusing on statistical correlation concepts and their application in data analytics.
+  Interactive open explainer for understanding statistical correlation
+  by manipulating data points and observing how Pearson correlation and
+  the fitted regression line respond.
 
 keywords:
   - statistics
   - correlation
-  - data-analytics
+  - Pearson-correlation
+  - data-visualization
+  - interactive-learning
   - education
+  - marimo
