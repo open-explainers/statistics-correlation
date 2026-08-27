@@ -93,31 +93,23 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
 
     correlation_display = "undefined" if correlation is None else f"{correlation:+.3f}"
 
-    mo.md(
-        f"""
-        ## What is happening?
-
-        **Pearson correlation:** `{correlation_display}`
-
-        - **Direction:** {direction}
-        - **Strength:** {strength}
-
-        The correlation coefficient describes the **direction and strength
-        of the linear relationship** between the two variables.
-        [Source](https://github.com/open-explainers/statistics-correlation)
-        """
-    )
     explanation = mo.md(
         f"""
-        ## What is happening?
+        ## Drag The Points
 
-        **Pearson correlation:** `{correlation_display}`
+        The **best-fit line** is the line minimizing
+        the **sum of the squared vertical distances** between the observed values
+        and the values predicted by the line.
+
+        **Pearson's correlation coefficient (r)** is describing the
+        **direction and strength of the linear relationship**
+        between the two variables.
+
+        **Pearson's r:** `{correlation_display}`
 
         - **Direction:** {direction}
         - **Strength:** {strength}
 
-        The correlation coefficient describes the **direction and strength
-        of the linear relationship** between the two variables. ⯁
         [Source](https://github.com/open-explainers/statistics-correlation)
         """
     )
@@ -128,6 +120,7 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
         gap=2,
         align="start",
     )
+    return
 
 
 if __name__ == "__main__":
