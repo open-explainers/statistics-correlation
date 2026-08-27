@@ -97,6 +97,11 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
         f"""
         ## Drag The Points
 
+        **Pearson's r:** `{correlation_display}`
+
+        - **Direction:** {direction}
+        - **Strength:** {strength}
+
         The **best-fit line** is the line minimizing
         the **sum of the squared vertical distances** between the observed values
         and the values predicted by the line.
@@ -104,11 +109,6 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
         **Pearson's correlation coefficient (r)** is describing the
         **direction and strength of the linear relationship**
         between the two variables.
-
-        **Pearson's r:** `{correlation_display}`
-
-        - **Direction:** {direction}
-        - **Strength:** {strength}
 
         [Source](https://github.com/open-explainers/statistics-correlation)
         """
