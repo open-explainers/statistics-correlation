@@ -211,100 +211,103 @@ function render({ model, el }) {
     model.save_changes();
   }
 
-  function drawPoints() {
-    pointLayer.replaceChildren();
+function drawPoints() {
+  pointLayer.replaceChildren();
 
-    const points = model.get("points").map((point) => ({
-      x: Number(point.x),
-      y: Number(point.y),
-    }));
+  const points = model.get("points").map((point) => ({
+    x: Number(point.x),
+    y: Number(point.y),
+  }));
+
+  drawRegression(points);
+
+  let activeIndex = null;
+
+  points.forEach((point, index) => {
+    const circle = document.createElementNS(SVG_NS, "circle");
+
+    circle.setAttribute("cx", xToScreen(point.x));
+    circle.setAttribute("cy", yToScreen(point.y));
+    circle.setAttribute("r", 9);
+    circle.setAttribute("class", "data-point");
+
+    circle.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+
+      activeIndex = index;
+
+      circle.classList.add("dragging");
+
+      svg.setPointerCapture(event.pointerId);
+    });
+
+    pointLayer.appendChild(circle);
+  });
+
+  svg.addEventListener("pointermove", (event) => {
+    if (activeIndex === null) {
+      return;
+    }
+
+    const bounds = svg.getBoundingClientRect();
+
+    const screenX =
+      ((event.clientX - bounds.left) / bounds.width) * width;
+
+    const screenY =
+      ((event.clientY - bounds.top) / bounds.height) * height;
+
+    const point = points[activeIndex];
+
+    point.x = screenToX(screenX);
+    point.y = screenToY(screenY);
+
+    const circles = pointLayer.querySelectorAll(".data-point");
+    const circle = circles[activeIndex];
+
+    circle.setAttribute("cx", xToScreen(point.x));
+    circle.setAttribute("cy", yToScreen(point.y));
 
     drawRegression(points);
 
-    points.forEach((point, index) => {
-      const circle = document.createElementNS(SVG_NS, "circle");
+    model.set(
+      "points",
+      points.map((item) => ({
+        x: Number(item.x.toFixed(4)),
+        y: Number(item.y.toFixed(4)),
+      }))
+    );
 
-      circle.setAttribute("cx", xToScreen(point.x));
-      circle.setAttribute("cy", yToScreen(point.y));
-      circle.setAttribute("r", 9);
-      circle.setAttribute("class", "data-point");
-      circle.setAttribute("tabindex", "0");
-      circle.setAttribute(
-        "aria-label",
-        `Point ${index + 1}: x ${point.x.toFixed(2)}, y ${point.y.toFixed(2)}`,
-      );
+    model.save_changes();
+  });
 
-      pointLayer.appendChild(circle);
+  function stopDragging(event) {
+    if (activeIndex === null) {
+      return;
+    }
 
-      let dragging = false;
+    const circles = pointLayer.querySelectorAll(".data-point");
+    const circle = circles[activeIndex];
 
-      circle.addEventListener("pointerdown", (event) => {
-        dragging = true;
-        circle.setPointerCapture(event.pointerId);
-        circle.classList.add("dragging");
-      });
+    circle?.classList.remove("dragging");
 
-      circle.addEventListener("pointermove", (event) => {
-        if (!dragging) return;
+    activeIndex = null;
 
-        const bounds = svg.getBoundingClientRect();
-        const screenX = ((event.clientX - bounds.left) / bounds.width) * width;
-        const screenY = ((event.clientY - bounds.top) / bounds.height) * height;
-
-        point.x = screenToX(screenX);
-        point.y = screenToY(screenY);
-
-        circle.setAttribute("cx", xToScreen(point.x));
-        circle.setAttribute("cy", yToScreen(point.y));
-
-        drawRegression(points);
-        syncPoints(points);
-      });
-
-      function stopDragging(event) {
-        if (!dragging) return;
-        dragging = false;
-        circle.classList.remove("dragging");
-        if (circle.hasPointerCapture(event.pointerId)) {
-          circle.releasePointerCapture(event.pointerId);
-        }
-      }
-
-      circle.addEventListener("pointerup", stopDragging);
-      circle.addEventListener("pointercancel", stopDragging);
-
-      circle.addEventListener("keydown", (event) => {
-        const step = event.shiftKey ? 0.5 : 0.1;
-
-        if (event.key === "ArrowLeft") {
-          point.x = Math.max(xMin(), point.x - step);
-        } else if (event.key === "ArrowRight") {
-          point.x = Math.min(xMax(), point.x + step);
-        } else if (event.key === "ArrowUp") {
-          point.y = Math.min(yMax(), point.y + step);
-        } else if (event.key === "ArrowDown") {
-          point.y = Math.max(yMin(), point.y - step);
-        } else {
-          return;
-        }
-
-        event.preventDefault();
-        circle.setAttribute("cx", xToScreen(point.x));
-        circle.setAttribute("cy", yToScreen(point.y));
-        drawRegression(points);
-        syncPoints(points);
-      });
-    });
+    if (svg.hasPointerCapture(event.pointerId)) {
+      svg.releasePointerCapture(event.pointerId);
+    }
   }
+
+  svg.addEventListener("pointerup", stopDragging);
+  svg.addEventListener("pointercancel", stopDragging);
+}
 
   drawAxes();
   drawPoints();
 
-  model.on("change:points", drawPoints);
-
-  model.on("change:points", () => {
-    if (!syncingFromDrag) drawPoints();
-  });
+  // model.on("change:points", () => {
+  //   if (!syncingFromDrag) drawPoints();
+  // });
 }
 
 export default { render };

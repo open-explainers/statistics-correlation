@@ -6,7 +6,33 @@
 [![Zensical docs](https://img.shields.io/badge/Zensical-docs-purple)](https://zensical.org/)
 [![MIT](https://img.shields.io/badge/license-see%20LICENSE-yellow.svg)](./LICENSE)
 
-> Open explainer for statistics correlation
+> Open reactive app explainer for statistics correlation
+
+## Explore Correlation
+
+Drag points in the scatterplot and watch the Pearson correlation coefficient
+and regression line update.
+
+Use the point-count control to explore how the number of observations affects
+the relationship.
+
+Try to create:
+
+- a strong positive correlation
+- a strong negative correlation
+- little or no linear correlation
+- an influential observation that changes the correlation substantially
+
+## Live App
+
+- [Live App](https://denisecase.github.io/statistics-correlation/)
+
+## Run Locally
+
+```shell
+uv sync
+uv run marimo run notebooks/app.py
+```
 
 ## Command Reference
 
@@ -115,9 +141,7 @@ git push -u origin main
 
 </details>
 
-## Live App
 
-- [Live App](https://denisecase.github.io/statistics-correlation/)
 
 ## Citation
 

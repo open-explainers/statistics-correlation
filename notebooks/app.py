@@ -40,10 +40,9 @@ def _():
 def _(mo):
     mo.md(
         """
-        # Correlation Explorer
+        # Correlation Explainer
 
         Drag any point and watch the correlation change.
-
         Try creating:
 
         - a strong positive correlation
@@ -82,7 +81,7 @@ def _(DraggableScatter, generate_points, mo, point_count):
         )
     )
 
-    scatter
+    # scatter
     return (scatter,)
 
 
@@ -99,18 +98,34 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
 
         **Pearson correlation:** `{correlation_display}`
 
-        **Direction:** {direction}
-
-        **Strength:** {strength}
+        - **Direction:** {direction}
+        - **Strength:** {strength}
 
         The correlation coefficient describes the **direction and strength
         of the linear relationship** between the two variables.
-
-        Drag a point and watch how much one observation can change the
-        relationship.
-
         [Source](https://github.com/open-explainers/statistics-correlation)
         """
+    )
+    explanation = mo.md(
+        f"""
+        ## What is happening?
+
+        **Pearson correlation:** `{correlation_display}`
+
+        - **Direction:** {direction}
+        - **Strength:** {strength}
+
+        The correlation coefficient describes the **direction and strength
+        of the linear relationship** between the two variables. ⯁
+        [Source](https://github.com/open-explainers/statistics-correlation)
+        """
+    )
+
+    mo.hstack(
+        [explanation, scatter],
+        widths=[1, 2],
+        gap=2,
+        align="start",
     )
     return
 
