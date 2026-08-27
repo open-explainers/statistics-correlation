@@ -18,7 +18,9 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
+    import anywidget
     import marimo as mo
+    import traitlets
 
     from correlation import (
         calculate_correlation,
