@@ -1,0 +1,119 @@
+"""Correlation Explainer Notebook.
+
+This notebook demonstrates the interactive correlation explainer built with marimo.
+
+PLAN CELLS - I need five cells:
+1. Introduction and instructions
+2. Select number of points
+3. Display draggable scatter plot
+4. Show correlation and description
+5. Conclusion and next steps
+"""
+
+import marimo
+
+__generated_with_marimo_version__ = "0.24.0"
+app = marimo.App(width="medium")
+
+
+@app.cell
+def _():
+    import marimo as mo
+
+    from correlation_explainer import (
+        DraggableScatter,
+        calculate_correlation,
+        describe_correlation,
+        generate_points,
+    )
+
+    return (
+        DraggableScatter,
+        calculate_correlation,
+        describe_correlation,
+        generate_points,
+        mo,
+    )
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        """
+        # Correlation Explorer
+
+        Drag any point and watch the correlation change.
+
+        Try creating:
+
+        - a strong positive correlation
+        - a strong negative correlation
+        - little or no correlation
+        - one unusual point that changes the correlation substantially
+        """
+    )
+    return
+
+
+@app.cell
+def _(mo):
+    point_count = mo.ui.slider(
+        start=3,
+        stop=30,
+        value=10,
+        step=1,
+        label="Number of points",
+        show_value=True,
+    )
+
+    point_count
+    return (point_count,)
+
+
+@app.cell
+def _(DraggableScatter, generate_points, mo, point_count):
+    scatter = mo.ui.anywidget(
+        DraggableScatter(
+            points=generate_points(point_count.value),
+            x_min=0.0,
+            x_max=10.0,
+            y_min=0.0,
+            y_max=10.0,
+        )
+    )
+
+    scatter
+    return (scatter,)
+
+
+@app.cell
+def _(calculate_correlation, describe_correlation, mo, scatter):
+    correlation = calculate_correlation(scatter.points)
+    direction, strength = describe_correlation(correlation)
+
+    correlation_display = "undefined" if correlation is None else f"{correlation:+.3f}"
+
+    mo.md(
+        f"""
+        ## What is happening?
+
+        **Pearson correlation:** `{correlation_display}`
+
+        **Direction:** {direction}
+
+        **Strength:** {strength}
+
+        The correlation coefficient describes the **direction and strength
+        of the linear relationship** between the two variables.
+
+        Drag a point and watch how much one observation can change the
+        relationship.
+
+        [Source](https://github.com/open-explainers/statistics-correlation)
+        """
+    )
+    return
+
+
+if __name__ == "__main__":
+    app.run()

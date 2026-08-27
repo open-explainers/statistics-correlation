@@ -1,0 +1,62 @@
+[project]
+dependencies = ["anywidget>=0.11.0", "marimo>=0.24.0", "traitlets>=5.16.1"]
+description = "Interactive correlation explainer built with marimo."
+name = "statistics-correlation"
+requires-python = ">=3.14"
+version = "0.1.0"
+
+[dependency-groups]
+dev = ["pre-commit", "pytest", "pytest-cov", "ruff", "ty"]
+
+[project.urls]
+App = "https://open-explainers.github.io/statistics-correlation/"
+Homepage = "https://github.com/open-explainers/statistics-correlation"
+Repository = "https://github.com/open-explainers/statistics-correlation"
+Issues = "https://github.com/open-explainers/statistics-correlation/issues"
+
+[tool.marimo.save]
+autosave = "after_delay"
+autosave_delay = 1000
+format_on_save = true
+
+[tool.marimo.package_management]
+manager = "uv"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"] # add for marimo apps
+addopts = "--cov=src --cov-fail-under=80 --cov-report=term-missing"
+filterwarnings = [
+  "ignore:FigureCanvasAgg is non-interactive, and thus cannot be shown:UserWarning",
+]
+minversion = "9.0"
+testpaths = ["tests"]
+
+[tool.ruff.lint]
+extend-select = ["D"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/**/*.py" = [
+  "B018",
+  "D",
+  "PLR1711",
+  "RUF059",
+]
+"src/**/__init__.py" = ["F401"]
+"src/**/_version.py" = ["ALL"]
+"tests/**/*.py" = ["D", "B018"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.uv]
+default-groups = "all"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/correlation_explainer"]

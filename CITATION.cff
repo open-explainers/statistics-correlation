@@ -1,0 +1,26 @@
+cff-version: "1.2.0"
+message: "If using this work, please cite it as described in this file."
+type: software
+
+title: "statistics-correlation"
+version: "0.9.0"
+date-released: "2026-01-11"
+
+authors:
+  - family-names: Case
+    given-names: Denise M.
+    orcid: "https://orcid.org/0000-0001-6165-7389"
+    affiliation: "Northwest Missouri State University, School of Computer Science and Information Systems, Maryville, MO, USA"
+
+repository-code: "https://github.com/open-explainers/statistics-correlation"
+url: "https://github.com/open-explainers/statistics-correlation"
+license: MIT
+
+abstract: >
+  statistics-correlation project focusing on statistical correlation concepts and their application in data analytics.
+
+keywords:
+  - statistics
+  - correlation
+  - data-analytics
+  - education
