@@ -20,12 +20,12 @@ app = marimo.App(width="medium")
 def _():
     import marimo as mo
 
-    from correlation_explainer import (
-        DraggableScatter,
+    from correlation import (
         calculate_correlation,
         describe_correlation,
         generate_points,
     )
+    from draggable_scatter import DraggableScatter
 
     return (
         DraggableScatter,
@@ -51,7 +51,6 @@ def _(mo):
         - one unusual point that changes the correlation substantially
         """
     )
-    return
 
 
 @app.cell
@@ -127,7 +126,6 @@ def _(calculate_correlation, describe_correlation, mo, scatter):
         gap=2,
         align="start",
     )
-    return
 
 
 if __name__ == "__main__":

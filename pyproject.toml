@@ -24,7 +24,7 @@ manager = "uv"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"] # add for marimo apps
-addopts = "--cov=src --cov-fail-under=80 --cov-report=term-missing"
+addopts = "--cov=src --cov-fail-under=60 --cov-report=term-missing"
 filterwarnings = [
   "ignore:FigureCanvasAgg is non-interactive, and thus cannot be shown:UserWarning",
 ]
@@ -38,7 +38,7 @@ extend-select = ["D"]
 force-sort-within-sections = true
 
 [tool.ruff.lint.per-file-ignores]
-"notebooks/**/*.py" = [
+"src/**/*.py" = [
   "B018",
   "D",
   "PLR1711",

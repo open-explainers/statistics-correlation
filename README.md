@@ -31,8 +31,10 @@ Try to create:
 
 ```shell
 uv sync
-uv run marimo run notebooks/app.py
+uv run marimo run src/app.py
 ```
+
+Hit CTRL+c to quit.
 
 ## Command Reference
 
@@ -108,11 +110,11 @@ Open a VS Code terminal (menu: `Terminal` / `New Terminal`) and run:
 git pull
 
 
-# Served as an app:
-uv run marimo run notebooks/app.py
+# Served as an app (hit CTRL+c to quit)
+uv run marimo run src/app.py
 
-# Interactive editing:
-uv run marimo edit notebooks/app.py
+# Interactive editing
+uv run marimo edit src/app.py
 
 # do chores
 uv run ruff format .
@@ -140,8 +142,6 @@ git push -u origin main
 ```
 
 </details>
-
-
 
 ## Citation
 

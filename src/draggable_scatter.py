@@ -5,6 +5,8 @@ from pathlib import Path
 import anywidget
 import traitlets
 
+__all__ = ["DraggableScatter"]
+
 _HERE = Path(__file__).parent
 
 

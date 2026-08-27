@@ -5,6 +5,14 @@ import math
 import random
 from typing import TypedDict
 
+__all__ = [
+    "Point",
+    "calculate_correlation",
+    "calculate_regression_line",
+    "describe_correlation",
+    "generate_points",
+]
+
 
 class Point(TypedDict):
     """A single x-y observation.

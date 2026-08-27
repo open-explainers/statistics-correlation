@@ -3,7 +3,7 @@
 from collections.abc import Sequence
 import math
 
-from correlation_explainer.correlation import (
+from correlation import (
     Point,
     calculate_correlation,
     calculate_regression_line,

@@ -9,7 +9,7 @@ browser to exercise, so they are intentionally out of scope here.
 import inspect
 from pathlib import Path
 
-from correlation_explainer.draggable_scatter import DraggableScatter
+from draggable_scatter import DraggableScatter
 
 SYNCED_TRAITS = ["points", "x_min", "x_max", "y_min", "y_max"]
 _MODULE_DIR = Path(inspect.getfile(DraggableScatter)).parent
